@@ -47,10 +47,10 @@ export default function Home() {
 
           <div className="mt-8 flex gap-4">
           <a
-            href="#features"
+            href="/dashboard"
             className="px-6 py-3 bg-[#1E3A5F] text-white font-semibold rounded-full hover:bg-[#162e49] transition"
           >
-            Lihat Fitur
+            Coba Demo
           </a>
 
           <a
@@ -67,7 +67,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="fitur" className="bg-black text-white py-20 px-6 sm:px-12 rounded-4xl">
+        <section id="services" className="bg-black text-white py-20 px-6 sm:px-12 rounded-4xl">
           <div className="max-w-6xl mx-auto">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
               <h2 className="text-3xl font-bold">
@@ -115,23 +115,23 @@ export default function Home() {
           
           {/* Middle: Links */}
           <div className="flex gap-4">
-            <a href="#privacy" className="hover:text-orange-500 transition">Privacy Policy</a>
-            <a href="#terms" className="hover:text-orange-500 transition">Terms</a>
-            <a href="#contact" className="hover:text-orange-500 transition">Contact</a>
+            <a href="#privacy" className="hover:text-[#1E3A5F] transition">Privacy Policy</a>
+            <a href="#terms" className="hover:text-[#1E3A5F] transition">Terms</a>
+            <a href="#contact" className="hover:text-[#1E3A5F] transition">Contact</a>
           </div>
 
           {/* Right: Social Media */}
           <div className="flex gap-4 text-gray-600">
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-orange-500 transition">
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#1E3A5F] transition">
               <Facebook size={20} />
             </a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-orange-500 transition">
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#1E3A5F] transition">
               <Instagram size={20} />
             </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-orange-500 transition">
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#1E3A5F] transition">
               <Linkedin size={20} />
             </a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-orange-500 transition">
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#1E3A5F] transition">
               <Twitter size={20} />
             </a>
           </div>
