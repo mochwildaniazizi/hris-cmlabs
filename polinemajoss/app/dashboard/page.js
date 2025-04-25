@@ -1,4 +1,4 @@
-import { SidebarLayout } from "/components/ui/sidebar.tsx"
+import { SidebarLayout } from "../../components/ui/sidebar.tsx"
 
 export default function DashboardPage() {
   return (
