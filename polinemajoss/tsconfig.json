@@ -27,8 +27,8 @@
     "next-env.d.ts",
     ".next/types/**/*.ts",
     "**/*.ts",
-    "**/*.tsx",
-    "app/page.js"],
+    "**/*.tsx"
+, "app/page.js", "app/page.js", "components/ui/sidebar.tsx"  ],
   "exclude": [
     "node_modules"
   ]
