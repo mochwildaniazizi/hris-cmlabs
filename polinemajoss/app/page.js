@@ -29,7 +29,7 @@ export default function Home() {
           <ul className="flex space-x-10 text-sm font-medium">
             <li><a href="#resume" className="hover:text-[#7CA5BF] transition">Galeri</a></li>
             <li><a href="#projects" className="hover:text-[#7CA5BF] transition">Tim Pengembang</a></li>
-            <li><a href="#contact" className="hover:text-[#7CA5BF] transition">Contact Us</a></li>
+            <li><a href="/login" className="hover:text-[#7CA5BF] transition">Login</a></li>
           </ul>
         </nav>
       </header>
