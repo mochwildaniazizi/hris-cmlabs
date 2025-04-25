@@ -1,37 +1,17 @@
 import Image from "next/image";
 import Logo from '../public/images/hris-logo.png';
 import { Facebook, Instagram, Linkedin, Twitter } from 'lucide-react';
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuIndicator,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  NavigationMenuViewport,
-} from "../components/ui/navigation-menu"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "../components/ui/card"
-
-
 
 export default function Home() {
   return (
-    <div className="items-center justify-items-center sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <header className="w-full sticky top-5 z-50"> {/* z-50 untuk memastikan navbar berada di atas */}
-        <nav className="bg-black text-white px-10 py-5 flex justify-between items-center rounded-full shadow-md max-w-8xl mx-auto">
+    <div className="items-center justify-items-center font-[family-name:var(--font-geist-sans)]">
+      <header className="w-full sticky top-10 z-50"> {/* z-50 untuk memastikan navbar berada di atas */}
+        <nav className="bg-black text-white px-20 py-5 flex justify-between items-center rounded-full shadow-md max-w-4xl mx-auto">
           {/* Menu */}
           <ul className="flex space-x-10 text-sm font-medium">
             <li><a href="#home" className="hover:text-[#7CA5BF] transition">Home</a></li>
-            <li><a href="#about" className="hover:text-[#7CA5BF] transition">About</a></li>
-            <li><a href="#services" className="hover:text-[#7CA5BF] transition">Service</a></li>
+            <li><a href="#about" className="hover:text-[#7CA5BF] transition">Tentang HRIS</a></li>
+            <li><a href="#services" className="hover:text-[#7CA5BF] transition">Fitur</a></li>
           </ul>
           
           {/* Logo */}
@@ -47,23 +27,23 @@ export default function Home() {
 
           {/* Menu */}
           <ul className="flex space-x-10 text-sm font-medium">
-            <li><a href="#resume" className="hover:text-[#7CA5BF] transition">Resume</a></li>
-            <li><a href="#projects" className="hover:text-[#7CA5BF] transition">Project</a></li>
+            <li><a href="#resume" className="hover:text-[#7CA5BF] transition">Galeri</a></li>
+            <li><a href="#projects" className="hover:text-[#7CA5BF] transition">Tim Pengembang</a></li>
             <li><a href="#contact" className="hover:text-[#7CA5BF] transition">Contact Us</a></li>
           </ul>
         </nav>
       </header>
       
-      <main className="row-start-2 flex flex-col items-center gap-10 sm:items-start text-center sm:text-left">
+      <main className="row-start-2 flex flex-col items-center sm:items-start text-center sm:text-left">
         <section id="hero" className="w-full text-center flex flex-col items-center py-16 bg-white px-6 sm:px-10">
-          <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight max-w-3xl">
-            I'm <span className="text-[#1E3A5F]">CMLABS HRIS</span>, <br />
-            Human Resource Information System
-          </h1>
+        <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight max-w-3xl">
+          CMLABS HRIS <br />
+          <span className="text-[#1E3A5F]">Human Resource Information System</span>
+        </h1>
+        <p className="mt-4 text-gray-600 text-lg max-w-xl">
+          Solusi terintegrasi untuk manajemen kehadiran, penggajian, dan data karyawan dalam satu platform efisien.
+        </p>
 
-          <p className="mt-6 text-gray-600 text-lg max-w-xl">
-            Sistem terintegrasi untuk mengelola absensi, penggajian, data karyawan, dan surat menyurat dalam satu platform yang efisien.
-          </p>
 
           <div className="mt-8 flex gap-4">
           <a
@@ -87,16 +67,18 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="services" className="bg-[#595959] text-white py-20 px-6 sm:px-12 rounded-t-4xl">
+        <section id="fitur" className="bg-black text-white py-20 px-6 sm:px-12 rounded-4xl">
           <div className="max-w-6xl mx-auto">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
               <h2 className="text-3xl font-bold">
-                <span className="text-orange-500">My</span> Services
+                <span className="text-[#1E3A5F]">My</span> Services
               </h2>
-              <p className="text-gray-300 max-w-md text-sm sm:text-base mt-4 sm:mt-0">
+              <p className="text-white max-w-md text-sm sm:text-base mt-4 sm:mt-0">
                 Kami menyediakan solusi HRIS berbasis web dan mobile untuk memenuhi kebutuhan perusahaan modern.
               </p>
             </div>
+
+            <div className="w-full h-0.5 bg-[#1E3A5F] rounded-full mt-4 sm:mt-6 mb-8"></div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
               {/* Service Card 1 */}
@@ -107,7 +89,7 @@ export default function Home() {
               </div>
 
               {/* Service Card 2 */}
-              <div className="bg-[#1a1a1a] p-6 rounded-t-xl shadow hover:shadow-lg transition border-t-4 border-orange-500">
+              <div className="bg-[#1a1a1a] p-6 rounded-t-xl shadow hover:shadow-lg transition border-t-4 border-[#1E3A5F]">
                 <h3 className="text-lg font-bold mb-3">Payroll System</h3>
                 <img src="/images/payroll.png" alt="Payroll" className="rounded-xl mb-4" />
                 <p className="text-gray-400 text-sm">Penggajian otomatis lengkap dengan tunjangan, potongan, dan slip gaji.</p>
@@ -129,7 +111,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-6">
           
           {/* Left: Copyright */}
-          <p>&copy; {new Date().getFullYear()} Jenny. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} CMLABS. All rights reserved.</p>
           
           {/* Middle: Links */}
           <div className="flex gap-4">
