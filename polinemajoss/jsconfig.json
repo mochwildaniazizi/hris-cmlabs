@@ -17,5 +17,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["**/*.js", "**/*.jsx", "app/page.js"]
+  "include": ["**/*.js", "**/*.jsx", "app/page.js"],
+  "exclude": ["node_modules"]
 }
