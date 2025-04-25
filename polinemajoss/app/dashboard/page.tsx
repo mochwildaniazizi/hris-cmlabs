@@ -1,4 +1,4 @@
-import { Sidebar } from "../../components/ui/sidebar"
+import { AppSidebar } from "../../components/ui/app-sidebar"
 import { ChartAreaInteractive } from "../../components/ui/chart-area-interactive"
 import { DataTable } from "../../components/ui/data-table"
 import { SectionCards } from "../../components/ui/section-card"
@@ -8,7 +8,7 @@ import data from "./data.json"
 export default function Page() {
   return (
     <SidebarProvider>
-      <Sidebar variant="inset" />
+      <AppSidebar variant="inset" />
       <SidebarInset>
         <SiteHeader />
         <div className="flex flex-1 flex-col">
