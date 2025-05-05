@@ -29,7 +29,7 @@ export default function Home() {
           <ul className="flex space-x-10 text-sm font-medium">
             <li><a href="#resume" className="hover:text-[#7CA5BF] transition">Galeri</a></li>
             <li><a href="#projects" className="hover:text-[#7CA5BF] transition">Tim Pengembang</a></li>
-            <li><a href="/login" className="hover:text-[#7CA5BF] transition">Login</a></li>
+            <li><a href="/signin" className="hover:text-[#7CA5BF] transition">Sign In</a></li>
           </ul>
         </nav>
       </header>
@@ -62,9 +62,9 @@ export default function Home() {
           </div>
 
           {/* Optional: Add image */}
-          <div className="mt-12">
+          {/* <div className="mt-12">
             <img src="/images/hris-illustration.png" alt="HRIS Illustration" className="w-full max-w-md" />
-          </div>
+          </div> */}
         </section>
 
         <section id="services" className="bg-black text-white py-20 px-6 sm:px-12 rounded-4xl">
