@@ -1,4 +1,5 @@
 "use client";
+import api from "../../lib/axios";
 
 import { useState } from "react";
 import { Input } from "../ui/input";
@@ -11,15 +12,17 @@ export function SignUp({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
-  const router = useRouter();
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [agreeTerms, setAgreeTerms] = useState(false);
-  
+  const router = useRouter();
+  const [name, setName] = useState("");
+
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -30,20 +33,19 @@ export function SignUp({
       return;
     }
 
+    
     try {
-      const res = await fetch("/api/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name, email, password }),
+      const res = await api.post("http://localhost:8000/api/sign-up", {
+        name: `${firstName} ${lastName}`,
+        email,
+        password,
       });
 
-      const data = await res.json();
+      const data = res.data;
 
-      if (res.ok) {
+      if (res.status >= 200 && res.status < 300) {
         setSuccess("Registrasi berhasil! Mengarahkan ke login...");
-        setTimeout(() => router.push("/login"), 2000);
+        setTimeout(() => router.push("/signin"), 2000);
       } else {
         setError(data.message || "Terjadi kesalahan saat registrasi");
       }
