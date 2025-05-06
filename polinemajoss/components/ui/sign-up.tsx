@@ -1,4 +1,5 @@
 "use client";
+import axios from 'axios';
 
 import { useState } from "react";
 import { Input } from "../ui/input";
@@ -31,7 +32,7 @@ export function SignUp({
     }
 
     try {
-      const res = await fetch("/api/register", {
+      const res = await axios.post("http://localhost:8000/api/signUp", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -39,11 +40,11 @@ export function SignUp({
         body: JSON.stringify({ name, email, password }),
       });
 
-      const data = await res.json();
+      const data = res.data;
 
-      if (res.ok) {
+      if (res.status >= 200 && res.status < 300) {
         setSuccess("Registrasi berhasil! Mengarahkan ke login...");
-        setTimeout(() => router.push("/login"), 2000);
+        setTimeout(() => router.push("/signin"), 2000);
       } else {
         setError(data.message || "Terjadi kesalahan saat registrasi");
       }

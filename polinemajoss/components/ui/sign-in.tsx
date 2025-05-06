@@ -1,4 +1,5 @@
 "use client";
+import axios from "axios";
 
 import { useState } from "react";
 import { Input } from "../ui/input";
@@ -25,7 +26,7 @@ export function SignIn({
   const isEmail = (value: string) => /\S+@\S+\.\S+/.test(value); // Simple email validation
   const isPhoneNumber = (value: string) => /^[0-9]{10,15}$/.test(value); // Simple phone number validation (adjust as needed)
   
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
   
@@ -36,19 +37,20 @@ export function SignIn({
     }
   
     try {
-      const res = await fetch("/api/login", {
+      const response = await axios.post("http://localhost:8000/api/sign-in", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ emailOrPhone, password }),
       });
+
+      
   
-      if (res.ok) {
+      if (response.status >= 200 && response.status < 300) {
         router.push("/dashboard");
       } else {
-        const data = await res.json();
-        setError(data.message || "Email or password is incorrect");
+        setError(response.data.message || "Email or password is incorrect");
       }
     } catch (err) {
       console.error(err);
@@ -117,13 +119,13 @@ export function SignIn({
               </div>
               <h2 className="text-2xl font-bold text-left">Sign in</h2>
 
-              <form onSubmit={handleLogin} className="flex flex-col gap-6 w-full">
+              <form onSubmit={handleSignIn} className="flex flex-col gap-6 w-full">
                 <p>Welcome back to HRIS cmlabs! Manage everything with ease.</p>
                 <div className="grid gap-3">
                   <Label htmlFor="emailPhoneNumber">Email or Phone Number</Label>
                   <Input
                     id="emailPhoneNumber"
-                    type="text"
+                    type="email"
                     placeholder="Enter your Email or Phone Number"
                     value={emailOrPhone}
                     onChange={handleInputChange}
