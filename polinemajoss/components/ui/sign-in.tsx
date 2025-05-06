@@ -1,4 +1,5 @@
 "use client";
+import axios from "axios";
 import api from "../../lib/axios";
 
 import { useState } from "react";
@@ -7,7 +8,6 @@ import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { Checkbox } from "../ui/checkbox";
 import { useRouter } from "next/navigation";
-
 
 export function SignIn({
   className,
@@ -38,24 +38,19 @@ export function SignIn({
     }
   
     try {
-      // Step penting untuk Sanctum
-      await api.get("/sanctum/csrf-cookie");
-  
-      const response = await api.post('http://localhost:8000/api/sign-in',
- {
+      await api.get("/sanctum/csrf-cookie"); // Set CSRF cookie
+    
+      await api.post("/api/sign-in", {
         email: emailOrPhone,
         password: password,
       });
-  
-      // Optional: kalau pakai session Sanctum, biasanya tidak perlu simpan token manual
-      // Tapi kalau backend kamu return token, kamu bisa tetap simpan
-      localStorage.setItem("token", response.data.access_token);
-  
+    
+      // Redirect to dashboard after successful login
       router.push("/dashboard");
-    } catch (err: any) {
+    } catch (err) {
       console.error(err);
       setError(err.response?.data?.message || "Email or password is incorrect");
-    }
+    }    
     
   };
 
@@ -177,7 +172,7 @@ export function SignIn({
                     type="button"
                     variant="outline"
                     className="w-full h-[50px] font-bold uppercase flex items-center justify-center gap-3"
-                    onClick={() => window.location.href = "/signin"}
+                    onClick={() => window.location.href = "/sign-in"}
                   >
                     {/* Google logo */}
                     <img
@@ -192,7 +187,7 @@ export function SignIn({
                     type="button"
                     variant="outline"
                     className="w-full h-[50px] font-bold uppercase"
-                    onClick={() => window.location.href = "/signin/employee"}
+                    onClick={() => window.location.href = "/sign-in/employee"}
                   >
                     Use a different sign-in method
                   </Button>
@@ -205,7 +200,7 @@ export function SignIn({
               </div>
               <div className="text-center text-sm">
                 Don&apos;t have an account yet?{" "}
-                <a href="/signup" className="underline underline-offset-4">
+                <a href="/sign-up" className="underline underline-offset-4">
                   Sign up now and get started
                 </a>
               </div>

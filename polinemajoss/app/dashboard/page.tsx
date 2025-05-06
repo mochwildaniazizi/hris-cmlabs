@@ -18,12 +18,12 @@ export default function Page() {
       try {
         await api.get("/api/user") // endpoint user Sanctum
       } catch {
-        router.push("/signin")
+        router.push("/sign-in");
       }
     }
-
     checkAuth()
   }, [])
+  
   return (
     <SidebarProvider>
       <AppSidebar variant="inset" />
