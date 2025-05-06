@@ -47,12 +47,20 @@ class AuthController extends Controller
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        return response()->json([
-            'message' => 'Login successful',
-            'access_token' => $token,
-            'token_type' => 'Bearer'
-            //  'user' => $user
-        ]);
+        return response()
+            ->json([
+                'message' => 'Login successful',
+            ])
+            ->cookie(
+                'token',              // nama cookie
+                $token,               // isi token
+                60,                   // durasi dalam menit
+                '/',                  // path
+                'localhost',          // domain (sesuaikan jika deploy)
+                false,                // secure: true jika pakai HTTPS
+                true                  // httpOnly agar tidak bisa diakses dari JS
+            );
+
     }
 
     // Logout API

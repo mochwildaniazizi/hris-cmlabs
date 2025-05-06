@@ -1,5 +1,5 @@
 "use client";
-import axios from "axios";
+import api from "../../lib/axios";
 
 import { useState } from "react";
 import { Input } from "../ui/input";
@@ -7,6 +7,7 @@ import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { Checkbox } from "../ui/checkbox";
 import { useRouter } from "next/navigation";
+
 
 export function SignIn({
   className,
@@ -37,25 +38,25 @@ export function SignIn({
     }
   
     try {
-      const response = await axios.post("http://localhost:8000/api/sign-in", {
+      const res = await fetch("/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ emailOrPhone, password }),
       });
-
-      
   
-      if (response.status >= 200 && response.status < 300) {
+      if (res.ok) {
         router.push("/dashboard");
       } else {
-        setError(response.data.message || "Email or password is incorrect");
+        const data = await res.json();
+        setError(data.message || "Email or password is incorrect");
       }
     } catch (err) {
       console.error(err);
-      setError("An error occurred while logging in. Please try again.");
+      setError(err.response?.data?.message || "Email or password is incorrect");
     }
+    
   };
 
   return (
