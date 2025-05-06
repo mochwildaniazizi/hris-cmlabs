@@ -8,7 +8,6 @@ import { Label } from "../ui/label";
 import { Checkbox } from "../ui/checkbox";
 import { useRouter } from "next/navigation";
 
-
 export function SignIn({
   className,
   ...props
