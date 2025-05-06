@@ -42,9 +42,12 @@ export function SignUp({
       });
 
       const data = res.data;
+      const data = res.data;
 
       if (res.status >= 200 && res.status < 300) {
+      if (res.status >= 200 && res.status < 300) {
         setSuccess("Registrasi berhasil! Mengarahkan ke login...");
+        setTimeout(() => router.push("/signin"), 2000);
         setTimeout(() => router.push("/signin"), 2000);
       } else {
         setError(data.message || "Terjadi kesalahan saat registrasi");

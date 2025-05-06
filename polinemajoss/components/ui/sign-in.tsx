@@ -38,21 +38,21 @@ export function SignIn({
     }
   
     try {
-      // Step penting untuk Sanctum
-      await api.get("/sanctum/csrf-cookie");
-  
-      const response = await api.post('http://localhost:8000/api/sign-in',
- {
-        email: emailOrPhone,
-        password: password,
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ emailOrPhone, password }),
       });
   
-      // Optional: kalau pakai session Sanctum, biasanya tidak perlu simpan token manual
-      // Tapi kalau backend kamu return token, kamu bisa tetap simpan
-      localStorage.setItem("token", response.data.access_token);
-  
-      router.push("/dashboard");
-    } catch (err: any) {
+      if (res.ok) {
+        router.push("/dashboard");
+      } else {
+        const data = await res.json();
+        setError(data.message || "Email or password is incorrect");
+      }
+    } catch (err) {
       console.error(err);
       setError(err.response?.data?.message || "Email or password is incorrect");
     }
