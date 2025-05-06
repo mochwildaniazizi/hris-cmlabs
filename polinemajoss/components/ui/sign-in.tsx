@@ -1,4 +1,5 @@
 "use client";
+import axios from "axios";
 import api from "../../lib/axios";
 
 import { useState } from "react";
@@ -37,24 +38,19 @@ export function SignIn({
     }
   
     try {
-      const res = await fetch("/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ emailOrPhone, password }),
+      await api.get("/sanctum/csrf-cookie"); // Set CSRF cookie
+    
+      await api.post("/api/sign-in", {
+        email: emailOrPhone,
+        password: password,
       });
-  
-      if (res.ok) {
-        router.push("/dashboard");
-      } else {
-        const data = await res.json();
-        setError(data.message || "Email or password is incorrect");
-      }
+    
+      // Redirect to dashboard after successful login
+      router.push("/dashboard");
     } catch (err) {
       console.error(err);
       setError(err.response?.data?.message || "Email or password is incorrect");
-    }
+    }    
     
   };
 
@@ -176,7 +172,7 @@ export function SignIn({
                     type="button"
                     variant="outline"
                     className="w-full h-[50px] font-bold uppercase flex items-center justify-center gap-3"
-                    onClick={() => window.location.href = "/signin"}
+                    onClick={() => window.location.href = "/sign-in"}
                   >
                     {/* Google logo */}
                     <img
@@ -191,7 +187,7 @@ export function SignIn({
                     type="button"
                     variant="outline"
                     className="w-full h-[50px] font-bold uppercase"
-                    onClick={() => window.location.href = "/signin/employee"}
+                    onClick={() => window.location.href = "/sign-in/employee"}
                   >
                     Use a different sign-in method
                   </Button>
@@ -204,7 +200,7 @@ export function SignIn({
               </div>
               <div className="text-center text-sm">
                 Don&apos;t have an account yet?{" "}
-                <a href="/signup" className="underline underline-offset-4">
+                <a href="/sign-up" className="underline underline-offset-4">
                   Sign up now and get started
                 </a>
               </div>
