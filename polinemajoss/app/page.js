@@ -29,7 +29,7 @@ export default function Home() {
           <ul className="flex space-x-10 text-sm font-medium">
             <li><a href="#resume" className="hover:text-[#7CA5BF] transition">Galeri</a></li>
             <li><a href="#projects" className="hover:text-[#7CA5BF] transition">Tim Pengembang</a></li>
-            <li><a href="#contact" className="hover:text-[#7CA5BF] transition">Contact Us</a></li>
+            <li><a href="/signin" className="hover:text-[#7CA5BF] transition">Sign In</a></li>
           </ul>
         </nav>
       </header>
@@ -62,9 +62,9 @@ export default function Home() {
           </div>
 
           {/* Optional: Add image */}
-          <div className="mt-12">
+          {/* <div className="mt-12">
             <img src="/images/hris-illustration.png" alt="HRIS Illustration" className="w-full max-w-md" />
-          </div>
+          </div> */}
         </section>
 
         <section id="services" className="bg-black text-white py-20 px-6 sm:px-12 rounded-4xl">
@@ -104,6 +104,87 @@ export default function Home() {
             </div>
           </div>
         </section>
+        <section id="resume" className="py-20 bg-white px-6 sm:px-12">
+          <div className="max-w-full mx-auto text-center">
+            <h2 className="text-3xl font-bold mb-4">
+              Let’s Have a Look at <span className="text-[#1E3A5F]">my Portfolio</span>
+            </h2>
+
+            <div className="relative flex items-center justify-center mt-10">
+              {/* Arrow Left */}
+              <button className="absolute left-0 bg-gray-100 p-2 rounded-full shadow hover:scale-105 transition">
+                <span className="text-xl">{'‹'}</span>
+              </button>
+
+              {/* Portfolio Images */}
+              <div className="flex flex-col sm:flex-row items-center gap-6 bg-gray-50 rounded-xl shadow p-6">
+                <img src="/images/portfolio1.png" alt="Portfolio 1" className="w-full sm:w-1/2 rounded-lg" />
+                <img src="/images/portfolio2.png" alt="Portfolio 2" className="w-full sm:w-1/2 rounded-lg" />
+              </div>
+
+              {/* Arrow Right */}
+              <button className="absolute right-0 bg-gray-100 p-2 rounded-full shadow hover:scale-105 transition">
+                <span className="text-xl">{'›'}</span>
+              </button>
+            </div>
+
+            <div className="flex flex-wrap justify-center gap-2 mt-6 text-sm">
+              <span className="bg-gray-200 text-gray-700 px-3 py-1 rounded-full">UI/UX Design</span>
+              <span className="bg-gray-200 text-gray-700 px-3 py-1 rounded-full">Landing Page</span>
+              <span className="bg-gray-200 text-gray-700 px-3 py-1 rounded-full">Workflow</span>
+            </div>
+
+            <div className="mt-4 text-gray-500 max-w-xl mx-auto text-sm">
+              <p>
+                Food Express - Food Delivery Solution. Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                Vestibulum et libero et metus dignissim...
+              </p>
+            </div>
+
+            <a
+              href="#"
+              className="inline-block mt-8 px-6 py-3 bg-[#1E3A5F] text-white rounded-full hover:bg-[#162e49] transition"
+            >
+              See More
+            </a>
+          </div>
+        </section>
+
+        <section id="contact" className="bg-white py-20 px-6 sm:px-12">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl font-bold mb-4">Contact Us</h2>
+            <p className="text-gray-600 mb-8 max-w-xl mx-auto">
+              Punya pertanyaan? Silakan hubungi kami melalui form di bawah ini atau media sosial kami.
+            </p>
+
+            <form className="grid gap-6 text-left">
+              <div className="grid sm:grid-cols-2 gap-6">
+                <input
+                  type="text"
+                  placeholder="Nama Lengkap"
+                  className="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#1E3A5F]"
+                />
+                <input
+                  type="email"
+                  placeholder="Alamat Email"
+                  className="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#1E3A5F]"
+                />
+              </div>
+              <textarea
+                placeholder="Pesan Anda"
+                rows={5}
+                className="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#1E3A5F]"
+              ></textarea>
+              <button
+                type="submit"
+                className="bg-[#1E3A5F] text-white px-6 py-3 rounded-full hover:bg-[#162e49] transition"
+              >
+                Kirim Pesan
+              </button>
+            </form>
+          </div>
+        </section>
+
       </main>
 
 
