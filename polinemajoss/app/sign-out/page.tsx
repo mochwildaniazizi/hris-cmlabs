@@ -5,10 +5,10 @@ import { useAuth } from "../../lib/authContext";
 
 export default function LogoutPage() {
   const router = useRouter();
-  const { logout } = useAuth();
+  const { signOut } = useAuth();
 
   useEffect(() => {
-    logout();
+    signOut();
     router.push("/sign-in");
   }, []);
 
