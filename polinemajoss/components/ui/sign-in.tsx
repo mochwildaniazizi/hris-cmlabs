@@ -13,6 +13,7 @@ export function SignIn({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
+  const [loading, setLoading] = useState(false); // Add loading state
   const router = useRouter();
   const [emailOrPhone, setEmailOrPhone] = useState("");
   const [password, setPassword] = useState("");
@@ -29,29 +30,53 @@ export function SignIn({
   
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
+    setError(""); // Reset error state sebelum request
+    setLoading(true); // Set loading state to true saat request dimulai
   
-    // Validate input before making the request
-    if (!emailOrPhone || (!isEmail(emailOrPhone) && !isPhoneNumber(emailOrPhone))) {
+    // Validasi input sebelum melakukan request
+   if (!emailOrPhone || (!isEmail(emailOrPhone) && !isPhoneNumber(emailOrPhone))) {
       setError("Please enter a valid email or phone number.");
+      setLoading(false); 
       return;
     }
-  
+
     try {
-      await api.get("/sanctum/csrf-cookie"); // Set CSRF cookie
-    
-      await api.post("/api/sign-in", {
+      console.log("Requesting CSRF cookie...");
+      await axios.get('http://localhost:8000/sanctum/csrf-cookie', {
+        withCredentials: true,
+      });
+
+      console.log("Sending login credentials...");
+      const response = await api.post("/api/sign-in", {
         email: emailOrPhone,
         password: password,
+        remember: rememberMe,
+      }, {
+        withCredentials: true,
       });
-    
-      // Redirect to dashboard after successful login
+
+      console.log("Login response:", response.data);
+
+      const token = response.data?.token;
+      if (!token) {
+        throw new Error("No token received from server.");
+      }
+
+      // Simpan token
+      localStorage.setItem("token", response.data.token);
+      document.cookie = `token=${token}; path=/;`;
       router.push("/dashboard");
-    } catch (err) {
-      console.error(err);
-      setError(err.response?.data?.message || "Email or password is incorrect");
-    }    
-    
+
+
+    } catch (err: any) {
+      console.error("Login error:", err);
+
+      const message = err.response?.data?.message || err.message || "Something went wrong. Please try again.";
+      setError(message);
+
+    } finally {
+      setLoading(false); 
+    }
   };
 
   return (
@@ -164,8 +189,9 @@ export function SignIn({
                   <Button
                     type="submit"
                     className="w-full h-[50px] font-bold uppercase"
-                  >
-                    Sign In
+                    disabled={loading} // Disable button while loading
+                    >
+                  {loading ? "Signing in..." : "Sign In"}
                   </Button>
 
                   <Button
@@ -225,3 +251,6 @@ export function SignIn({
     </div>
   );
 }
+
+
+

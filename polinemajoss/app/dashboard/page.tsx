@@ -1,29 +1,28 @@
-'use client';
-import { AppSidebar } from "../../components/ui/app-sidebar"
-import { ChartAreaInteractive } from "../../components/ui/chart-area-interactive"
-import { DataTable } from "../../components/ui/data-table"
-import { SectionCards } from "../../components/ui/section-card"
-import { SiteHeader } from "../../components/ui/site-header"
-import { SidebarInset, SidebarProvider } from "../../components/ui/sidebar"
-import data from "./data.json"
-import { useEffect } from "react"
-import { useRouter } from "next/navigation"
-import api from "../../lib/axios"
+"use client";
+
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "../../lib/authContext";
+import { AppSidebar } from "../../components/ui/app-sidebar";
+import { ChartAreaInteractive } from "../../components/ui/chart-area-interactive";
+import { DataTable } from "../../components/ui/data-table";
+import { SectionCards } from "../../components/ui/section-card";
+import { SiteHeader } from "../../components/ui/site-header";
+import { SidebarInset, SidebarProvider } from "../../components/ui/sidebar";
+import data from "./data.json";
 
 export default function Page() {
-  const router = useRouter()
+  const { user, loading } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        await api.get("/api/user") // endpoint user Sanctum
-      } catch {
-        router.push("/sign-in");
-      }
+    if (!loading && !user) {
+      router.push("/api/sign-in");
     }
-    checkAuth()
-  }, [])
-  
+  }, [loading, user]);
+
+  if (loading || !user) return <div>Loading...</div>;
+
   return (
     <SidebarProvider>
       <AppSidebar variant="inset" />
@@ -42,5 +41,5 @@ export default function Page() {
         </div>
       </SidebarInset>
     </SidebarProvider>
-  )
+  );
 }

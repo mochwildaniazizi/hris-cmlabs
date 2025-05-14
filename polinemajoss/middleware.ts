@@ -1,16 +1,27 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+
+// export function middleware(request: NextRequest) {
+//   const token = request.cookies.get("token")?.value || request.headers.get("Authorization");
+
+//   if (!token && request.nextUrl.pathname.startsWith("/dashboard")) {
+//     return NextResponse.redirect(new URL("/sign-in", request.url));
+//   }
+
+//   return NextResponse.next();
+// }
 
 export function middleware(request: NextRequest) {
-  const token = request.cookies.get('laravel_session') || request.cookies.get('XSRF-TOKEN')
+  const token = request.cookies.get("token")?.value;
 
-  // Cek apakah user belum login
-  if (!token && request.nextUrl.pathname.startsWith('/dashboard')) {
-    return NextResponse.redirect(new URL('/signin', request.url))
+  if (!token && request.nextUrl.pathname.startsWith("/dashboard")) {
+    return NextResponse.redirect(new URL("/api/sign-in", request.url));
   }
 
-  return NextResponse.next()
+  return NextResponse.next();
 }
 
+// Jalankan middleware hanya untuk rute ini
 export const config = {
-  matcher: ['/dashboard/:path*'],
-}
+  matcher: ["/dashboard/:path*"],
+};
