@@ -110,7 +110,7 @@ export function SignUp({
                     filter: "drop-shadow(0 0 1px 5px #000)",
                   }}
                 />
-                <a href="/signin" className="text-blue-600 hover:underline">
+                <a href="/sign-in" className="text-blue-600 hover:underline">
                   Sign in here!
                 </a>
               </div>
@@ -214,7 +214,7 @@ export function SignUp({
               </div>
               <div className="text-center text-sm">
                 Already have an account?{" "}
-                <a href="/signin" className="underline underline-offset-4">
+                <a href="/sign-in" className="underline underline-offset-4">
                   Sign in here
                 </a>
               </div>
