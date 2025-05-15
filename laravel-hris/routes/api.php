@@ -9,18 +9,18 @@ use App\Http\Controllers\LetterController;
 use App\Http\Controllers\CheckClockController;
 
 // Public routes
-Route::post('/api/sign-in', [AuthController::class, 'signIn']);
-Route::post('/api/sign-up', [AuthController::class, 'signUp']);
-Route::post('/api/sign-up/verify', [AuthController::class, 'verifyEmail']);
-Route::post('/api/forgot-password', [AuthController::class, 'forgotPassword']);
-Route::get('/api/try-for-free', [AuthController::class, 'tryForFree']);
+Route::post('/sign-in', [AuthController::class, 'signIn']);
+Route::post('/sign-up', [AuthController::class, 'signUp']);
+Route::post('/sign-up/verify', [AuthController::class, 'verifyEmail']);
+Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
+Route::get('/try-for-free', [AuthController::class, 'tryForFree']);
 
 Route::get('/api/employee', [AuthController::class, 'employee']);
 Route::get('/api/employee/{id}', [AuthController::class, 'employeeById']);
 
 // Authenticated routes (via Sanctum token)
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/api/user', function (Request $request) {
+    Route::get('/user', function (Request $request) {
         return $request->user();
     });
 });

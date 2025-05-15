@@ -17,7 +17,7 @@ export default function Page() {
 
   useEffect(() => {
     if (!loading && !user) {
-      router.push("/api/sign-in");
+      router.push("/sign-in");
     }
   }, [loading, user]);
 
