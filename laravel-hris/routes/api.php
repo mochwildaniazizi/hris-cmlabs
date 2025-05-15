@@ -16,6 +16,9 @@ Route::post('/sign-out', [AuthController::class, 'signOut']);
 Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
 Route::get('/try-for-free', [AuthController::class, 'tryForFree']);
 
+Route::get('/api/employee', [AuthController::class, 'employee']);
+Route::get('/api/employee/{id}', [AuthController::class, 'employeeById']);
+
 // Authenticated routes (via Sanctum token)
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
