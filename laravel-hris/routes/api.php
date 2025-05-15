@@ -12,6 +12,7 @@ use App\Http\Controllers\CheckClockController;
 Route::post('/sign-in', [AuthController::class, 'signIn']);
 Route::post('/sign-up', [AuthController::class, 'signUp']);
 Route::post('/sign-up/verify', [AuthController::class, 'verifyEmail']);
+Route::post('/sign-out', [AuthController::class, 'signOut']);
 Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
 Route::get('/try-for-free', [AuthController::class, 'tryForFree']);
 
@@ -24,7 +25,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
 //     // Tambahkan route lain yang membutuhkan autentikasi di sini
-//     Route::post('/logout', [AuthController::class, 'logout']);
 //     Route::apiResource('employees', EmployeeController::class);
 //     Route::apiResource('salaries', SalaryController::class);
 //     Route::apiResource('letters', LetterController::class);
