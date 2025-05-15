@@ -1,4 +1,5 @@
 "use client";
+import axios from "axios";
 import api from "../../lib/axios";
 
 import { useState } from "react";
@@ -8,11 +9,11 @@ import { Label } from "../ui/label";
 import { Checkbox } from "../ui/checkbox";
 import { useRouter } from "next/navigation";
 
-
 export function SignIn({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
+  const [loading, setLoading] = useState(false); // Add loading state
   const router = useRouter();
   const [emailOrPhone, setEmailOrPhone] = useState("");
   const [password, setPassword] = useState("");
@@ -29,34 +30,53 @@ export function SignIn({
   
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
+    setError(""); // Reset error state sebelum request
+    setLoading(true); // Set loading state to true saat request dimulai
   
-    // Validate input before making the request
-    if (!emailOrPhone || (!isEmail(emailOrPhone) && !isPhoneNumber(emailOrPhone))) {
+    // Validasi input sebelum melakukan request
+   if (!emailOrPhone || (!isEmail(emailOrPhone) && !isPhoneNumber(emailOrPhone))) {
       setError("Please enter a valid email or phone number.");
+      setLoading(false); 
       return;
     }
-  
+
     try {
-      // Step penting untuk Sanctum
-      await api.get("/sanctum/csrf-cookie");
-  
-      const response = await api.post('http://localhost:8000/api/sign-in',
- {
+      console.log("Requesting CSRF cookie...");
+      await axios.get('http://localhost:8000/sanctum/csrf-cookie', {
+        withCredentials: true,
+      });
+
+      console.log("Sending login credentials...");
+      const response = await api.post("/api/sign-in", {
         email: emailOrPhone,
         password: password,
+        remember: rememberMe,
+      }, {
+        withCredentials: true,
       });
-  
-      // Optional: kalau pakai session Sanctum, biasanya tidak perlu simpan token manual
-      // Tapi kalau backend kamu return token, kamu bisa tetap simpan
-      localStorage.setItem("token", response.data.access_token);
-  
+
+      console.log("Login response:", response.data);
+
+      const token = response.data?.token;
+      if (!token) {
+        throw new Error("No token received from server.");
+      }
+
+      // Simpan token
+      localStorage.setItem("token", response.data.token);
+      document.cookie = `token=${token}; path=/;`;
       router.push("/dashboard");
+
+
     } catch (err: any) {
-      console.error(err);
-      setError(err.response?.data?.message || "Email or password is incorrect");
+      console.error("Login error:", err);
+
+      const message = err.response?.data?.message || err.message || "Something went wrong. Please try again.";
+      setError(message);
+
+    } finally {
+      setLoading(false); 
     }
-    
   };
 
   return (
@@ -169,15 +189,16 @@ export function SignIn({
                   <Button
                     type="submit"
                     className="w-full h-[50px] font-bold uppercase"
-                  >
-                    Sign In
+                    disabled={loading} // Disable button while loading
+                    >
+                  {loading ? "Signing in..." : "Sign In"}
                   </Button>
 
                   <Button
                     type="button"
                     variant="outline"
                     className="w-full h-[50px] font-bold uppercase flex items-center justify-center gap-3"
-                    onClick={() => window.location.href = "/signin"}
+                    onClick={() => window.location.href = "/sign-in"}
                   >
                     {/* Google logo */}
                     <img
@@ -192,7 +213,7 @@ export function SignIn({
                     type="button"
                     variant="outline"
                     className="w-full h-[50px] font-bold uppercase"
-                    onClick={() => window.location.href = "/signin/employee"}
+                    onClick={() => window.location.href = "/sign-in/employee"}
                   >
                     Use a different sign-in method
                   </Button>
@@ -205,7 +226,7 @@ export function SignIn({
               </div>
               <div className="text-center text-sm">
                 Don&apos;t have an account yet?{" "}
-                <a href="/signup" className="underline underline-offset-4">
+                <a href="/sign-up" className="underline underline-offset-4">
                   Sign up now and get started
                 </a>
               </div>
@@ -230,3 +251,6 @@ export function SignIn({
     </div>
   );
 }
+
+
+

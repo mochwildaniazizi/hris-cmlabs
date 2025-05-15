@@ -1,16 +1,9 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist } from "next/font/google";
 import "./globals.css";
+import { AuthProvider } from "../lib/authContext"; // import di sini
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const geist = Geist({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -24,10 +17,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        <div className="max-w-6xl mx-auto px-4">
-          <main className="mt-8">{children}</main>
-        </div>
+      <body className={`${geist.className}`}>
+        <AuthProvider>
+          <div className="max-w-6xl mx-auto px-4">
+            <main className="mt-8">{children}</main>
+          </div>
+        </AuthProvider>
       </body>
     </html>
   );

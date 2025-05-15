@@ -1,8 +1,13 @@
 import axios from 'axios';
 
-const api = axios.create({
-  baseURL: 'http://127.0.0.1:8000',
-  withCredentials: true,
+const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
+const axiosInstance = axios.create({
+  baseURL: "http://127.0.0.1:8000/api/",
+  headers: {
+    Authorization: token ? `Bearer ${token}` : '',
+    Accept: "application/json",
+  },
 });
 
-export default api;
+export default axiosInstance;

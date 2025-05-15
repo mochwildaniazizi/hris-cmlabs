@@ -1,5 +1,4 @@
 "use client"
-
 import * as React from "react"
 import {
   ArrowUpCircleIcon,
@@ -26,6 +25,8 @@ import { NavDocuments } from "../../components/ui/nav-document"
 import { NavMain } from "../../components/ui/nav-main"
 import { NavSecondary } from "../..//components/ui/nav-secondary"
 import { NavUser } from "../../components/ui/nav-user"
+import { useAuth } from "../../lib/authContext"
+
 import {
   Sidebar,
   SidebarContent,
@@ -37,11 +38,7 @@ import {
 } from "../../components/ui/sidebar"
 
 const data = {
-  user: {
-    name: "Moch. Wildani",
-    email: "wilo@gmail.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
+  
   navMain: [
     {
       title: "Dashboard",
@@ -154,6 +151,8 @@ const data = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { user, } = useAuth()
+
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -178,8 +177,27 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
-      </SidebarFooter>
+        {user && (
+      <NavUser
+        user={{
+          name: user.name,
+          email: user.email,
+          avatar: user.avatar || "/avatars/default.jpg",
+        }}
+      />
+    )}      
+      {/* {loading ? (
+      <div className="px-4 py-2 text-sm text-muted">Loading user...</div>
+    ) : user ? (
+      <NavUser
+        user={{
+          name: user.name,
+          email: user.email,
+          avatar: user.avatar || "/avatars/default.jpg",
+        }}
+      />
+    ) : null} */}
+    </SidebarFooter>
     </Sidebar>
   )
 }
