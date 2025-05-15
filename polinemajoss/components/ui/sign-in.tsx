@@ -47,7 +47,7 @@ export function SignIn({
       });
 
       console.log("Sending login credentials...");
-      const response = await api.post("/api/sign-in", {
+      const response = await api.post("/sign-in", {
         email: emailOrPhone,
         password: password,
         remember: rememberMe,
