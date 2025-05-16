@@ -1,10 +1,27 @@
-"use client"
-import { usePathname } from "next/navigation"
-import { useState } from "react"
-import { Bell, Search, UserCircle } from "lucide-react"
-import { SidebarTrigger } from "./sidebar"
+"use client";
 
-// route ke halaman buat judul halaman
+import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
+import {
+  Bell,
+  Search,
+  UserCircle,
+  LogOut,
+  CreditCard,
+  BellIcon,
+  UserCircleIcon
+} from "lucide-react";
+import { useAuth } from "../../lib/authContext";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuSeparator
+} from "../../components/ui/dropdown-menu"; // sesuaikan path komponen dropdown-menu
+import { SidebarTrigger } from "./sidebar";
+
 const pageTitles: Record<string, string> = {
   "/dashboard": "Dashboard",
   "/employee": "Employee",
