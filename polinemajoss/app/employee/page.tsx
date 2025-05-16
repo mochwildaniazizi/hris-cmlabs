@@ -14,18 +14,18 @@ export default function EmployeeDatabase() {
   const [employees, setEmployees] = useState([])
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    fetch("http://localhost:8000/api/employees", {
-      headers: { "Accept": "application/json" }
-    })
-      .then(res => {
-        if (!res.ok) throw new Error("Failed to fetch")
-        return res.json()
-      })
-      .then(data => setEmployees(data))
-      .catch(err => console.error("Fetch error:", err))
-      .finally(() => setLoading(false))
-  }, [])
+  // useEffect(() => {
+  //   fetch("http://localhost:8000/api/employees", {
+  //     headers: { "Accept": "application/json" }
+  //   })
+  //     .then(res => {
+  //       if (!res.ok) throw new Error("Failed to fetch")
+  //       return res.json()
+  //     })
+  //     .then(data => setEmployees(data))
+  //     .catch(err => console.error("Fetch error:", err))
+  //     .finally(() => setLoading(false))
+  // }, [])
 
   const currentMonthYear = new Date().toLocaleDateString("id-ID", {
     month: "long",
