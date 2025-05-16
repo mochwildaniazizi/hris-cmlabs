@@ -1,8 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useAuth } from "../../lib/authContext";
 import { AppSidebar } from "../../components/ui/app-sidebar";
 import { ChartAreaInteractive } from "../../components/ui/chart-area-interactive";
 import { DataTable } from "../../components/ui/data-table";
@@ -12,23 +9,6 @@ import { SidebarInset, SidebarProvider } from "../../components/ui/sidebar";
 import data from "./data.json";
 
 export default function Page() {
-  const { user, loading } = useAuth();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!loading && !user) {
-      router.push("/sign-in");
-    }
-  }, [loading, user]);
-
-  if (loading || !user) {
-    return (
-      <div className="flex h-screen items-center justify-center bg-white">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500 border-opacity-50"></div>
-      </div>
-    );
-  }
-
   return (
     <SidebarProvider>
       <AppSidebar variant="inset" />
