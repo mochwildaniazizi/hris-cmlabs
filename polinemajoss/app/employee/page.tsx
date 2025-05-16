@@ -16,18 +16,14 @@ export default function EmployeeDatabase() {
 
   useEffect(() => {
     fetch("http://localhost:8000/api/employees", {
-      headers: {
-        "Accept": "application/json",
-      }
+      headers: { "Accept": "application/json" }
     })
       .then(res => {
-        if (!res.ok) throw new Error("Failed to fetch");
-        return res.json();
+        if (!res.ok) throw new Error("Failed to fetch")
+        return res.json()
       })
       .then(data => setEmployees(data))
-      .catch(err => {
-        console.error("Fetch error:", err);
-      })
+      .catch(err => console.error("Fetch error:", err))
       .finally(() => setLoading(false))
   }, [])
 
@@ -41,8 +37,9 @@ export default function EmployeeDatabase() {
       <AppSidebar variant="inset" />
       <SidebarInset>
         <div className="flex flex-col h-full bg-white">
+
           {/* Header */}
-          <header className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+          <header className="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-gray-200 w-full">
             <div className="flex items-center space-x-3">
               <div className="font-bold text-lg select-none">Employee Database</div>
               <div className="relative w-72">
@@ -67,45 +64,40 @@ export default function EmployeeDatabase() {
           </header>
 
           {/* Summary Cards */}
-          <section className="flex border-b border-gray-200 divide-x divide-gray-300 px-6 py-4">
+          <section className="px-6 py-4 border-b border-gray-200">
             <div className="grid grid-cols-4 gap-6 mb-8">
-            <Card className="w-full">
-              <CardContent className="py-4 px-6">
-                <h3 className="text-sm text-muted-foreground">Periode</h3>
-                <p className="text-lg font-semibold">{currentMonthYear}</p>
-              </CardContent>
-            </Card>
-            <Card className="w-full">
-              <CardContent className="py-4 px-6">
-                <h3 className="text-sm text-muted-foreground">Total Employee</h3>
-                <p className="text-lg font-semibold">208</p>
-              </CardContent>
-            </Card>
-            <Card className="w-full">
-              <CardContent className="py-4 px-6">
-                <h3 className="text-sm text-muted-foreground">Total New Hire</h3>
-                <p className="text-lg font-semibold">20</p>
-              </CardContent>
-            </Card>
-            <Card className="w-full">
-              <CardContent className="py-4 px-6">
-                <h3 className="text-sm text-muted-foreground">Full Time Employee</h3>
-                <p className="text-lg font-semibold">20</p>
-              </CardContent>
-            </Card>
-          </div>
+              <Card className="w-full">
+                <CardContent className="py-4 px-6">
+                  <h3 className="text-sm text-muted-foreground">Periode</h3>
+                  <p className="text-lg font-semibold">{currentMonthYear}</p>
+                </CardContent>
+              </Card>
+              <Card className="w-full">
+                <CardContent className="py-4 px-6">
+                  <h3 className="text-sm text-muted-foreground">Total Employee</h3>
+                  <p className="text-lg font-semibold">208</p>
+                </CardContent>
+              </Card>
+              <Card className="w-full">
+                <CardContent className="py-4 px-6">
+                  <h3 className="text-sm text-muted-foreground">Total New Hire</h3>
+                  <p className="text-lg font-semibold">20</p>
+                </CardContent>
+              </Card>
+              <Card className="w-full">
+                <CardContent className="py-4 px-6">
+                  <h3 className="text-sm text-muted-foreground">Full Time Employee</h3>
+                  <p className="text-lg font-semibold">20</p>
+                </CardContent>
+              </Card>
+            </div>
           </section>
 
           {/* Table Controls */}
           <section className="flex flex-col md:flex-row justify-between items-center gap-4 px-6 py-4">
             <h2 className="font-semibold text-lg whitespace-nowrap">All Employees Information</h2>
             <div className="flex flex-wrap gap-2">
-              <Input
-                type="text"
-                placeholder="Search Employee"
-                className="h-9 w-60"
-                // onChange={handleSearchChange}
-              />
+              <Input type="text" placeholder="Search Employee" className="h-9 w-60" />
               <Button variant="outline" size="sm" className="flex items-center gap-1">
                 <Filter size={16} />
                 Filter
@@ -174,9 +166,15 @@ export default function EmployeeDatabase() {
                         <Toggle defaultChecked={emp.user?.status === 'active'} />
                       </TableCell>
                       <TableCell className="flex gap-2">
-                        <button className="p-1 rounded hover:bg-gray-100" title="View"><svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg></button>
-                        <button className="p-1 rounded hover:bg-gray-100" title="Edit"><svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M11 5h6M6 12v6h6l6-6-6-6H6v6z" /></svg></button>
-                        <button className="p-1 rounded hover:bg-gray-100" title="Delete"><svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg></button>
+                        <button className="p-1 rounded hover:bg-gray-100" title="View">
+                          👁️
+                        </button>
+                        <button className="p-1 rounded hover:bg-gray-100" title="Edit">
+                          ✏️
+                        </button>
+                        <button className="p-1 rounded hover:bg-gray-100" title="Delete">
+                          ❌
+                        </button>
                       </TableCell>
                     </TableRow>
                   ))
@@ -203,6 +201,7 @@ export default function EmployeeDatabase() {
               </div>
             </div>
           </section>
+
         </div>
       </SidebarInset>
     </SidebarProvider>

@@ -2,6 +2,7 @@
 import { usePathname } from "next/navigation"
 import { useState } from "react"
 import { Bell, Search, UserCircle } from "lucide-react"
+import { SidebarTrigger } from "./sidebar"
 
 // route ke halaman buat judul halaman
 const pageTitles: Record<string, string> = {
@@ -9,15 +10,16 @@ const pageTitles: Record<string, string> = {
   "/employee": "Employee",
   // sesuaikan route dan judul
 }
-
 export function SiteHeader() {
   const pathname = usePathname()
   const title = pageTitles[pathname] || "Page"
 
   const [search, setSearch] = useState("")
+  
 
   return (
     <header className="w-full h-12 border-b flex items-center px-4 gap-4 bg-white">
+      <SidebarTrigger className="-ml-1" />
       {/* Judul halaman */}
       <h1 className="text-lg font-semibold flex-shrink-0">{title}</h1>
 
