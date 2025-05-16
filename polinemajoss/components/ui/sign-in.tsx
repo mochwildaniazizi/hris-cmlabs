@@ -24,59 +24,36 @@ export function SignIn({
     const value = e.target.value;
     setEmailOrPhone(value);
   };
-  
+
   const isEmail = (value: string) => /\S+@\S+\.\S+/.test(value); // Simple email validation
   const isPhoneNumber = (value: string) => /^[0-9]{10,15}$/.test(value); // Simple phone number validation (adjust as needed)
-  
+
+  // Simulasi sign-in tanpa backend
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(""); // Reset error state sebelum request
-    setLoading(true); // Set loading state to true saat request dimulai
-  
-    // Validasi input sebelum melakukan request
-   if (!emailOrPhone || (!isEmail(emailOrPhone) && !isPhoneNumber(emailOrPhone))) {
+    setError(""); // Reset error state
+    setLoading(true);
+
+    // Validasi input sebelum "sign-in"
+    if (!emailOrPhone || (!isEmail(emailOrPhone) && !isPhoneNumber(emailOrPhone))) {
       setError("Please enter a valid email or phone number.");
-      setLoading(false); 
+      setLoading(false);
+      return;
+    }
+    if (!password) {
+      setError("Please enter your password.");
+      setLoading(false);
       return;
     }
 
-    try {
-      console.log("Requesting CSRF cookie...");
-      await axios.get('http://localhost:8000/sanctum/csrf-cookie', {
-        withCredentials: true,
-      });
-
-      console.log("Sending login credentials...");
-      const response = await api.post("/sign-in", {
-        email: emailOrPhone,
-        password: password,
-        remember: rememberMe,
-      }, {
-        withCredentials: true,
-      });
-
-      console.log("Login response:", response.data);
-
-      const token = response.data?.token;
-      if (!token) {
-        throw new Error("No token received from server.");
-      }
-
-      // Simpan token
-      localStorage.setItem("token", response.data.token);
-      document.cookie = `token=${token}; path=/;`;
+    // Simulasi delay dan redirect
+    setTimeout(() => {
+      setLoading(false);
+      // Simulasi penyimpanan token
+      localStorage.setItem("token", "dummy-token");
+      document.cookie = `token=dummy-token; path=/;`;
       router.push("/dashboard");
-
-
-    } catch (err: any) {
-      console.error("Login error:", err);
-
-      const message = err.response?.data?.message || err.message || "Something went wrong. Please try again.";
-      setError(message);
-
-    } finally {
-      setLoading(false); 
-    }
+    }, 1000);
   };
 
   return (
@@ -140,44 +117,70 @@ export function SignIn({
               </div>
               <h2 className="text-2xl font-bold text-left">Sign in</h2>
 
-              <form onSubmit={handleSignIn} className="flex flex-col gap-6 w-full">
+                <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  setError("");
+                  // Simple validation
+                  if (!emailOrPhone) {
+                  setError("Please enter your email or phone number.");
+                  return;
+                  }
+                  if (!isEmail(emailOrPhone) && !isPhoneNumber(emailOrPhone)) {
+                  setError("Please enter a valid email or phone number.");
+                  return;
+                  }
+                  if (!password) {
+                  setError("Please enter your password.");
+                  return;
+                  }
+                  // Simulate successful sign-in (no backend)
+                  setLoading(true);
+                  setTimeout(() => {
+                  setLoading(false);
+                  // Simulate redirect
+                  router.push("/dashboard");
+                  }, 1000);
+                }}
+                className="flex flex-col gap-6 w-full"
+                >
                 <p>Welcome back to HRIS cmlabs! Manage everything with ease.</p>
                 <div className="grid gap-3">
                   <Label htmlFor="emailPhoneNumber">Email or Phone Number</Label>
                   <Input
-                    id="emailPhoneNumber"
-                    type="email"
-                    placeholder="Enter your Email or Phone Number"
-                    value={emailOrPhone}
-                    onChange={handleInputChange}
-                    required
+                  id="emailPhoneNumber"
+                  type="text"
+                  placeholder="Enter your Email or Phone Number"
+                  value={emailOrPhone}
+                  onChange={(e) => setEmailOrPhone(e.target.value)}
+                  required
                   />
                   {emailOrPhone && !isEmail(emailOrPhone) && !isPhoneNumber(emailOrPhone) && (
-                    <p className="text-sm text-red-500">Please enter a valid email or phone number</p>
+                  <p className="text-sm text-red-500">Please enter a valid email or phone number</p>
                   )}
                 </div>
                 <div className="grid gap-3">
                   <Label htmlFor="password">Password</Label>
                   <Input
-                    id="password"
-                    type="password"
-                    placeholder="Enter your password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
+                  id="password"
+                  type="password"
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
                   />
                 </div>
                 <div className="flex items-center justify-between text-sm">
                   <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="remember"
-                      checked={rememberMe}
-                      onCheckedChange={(checked) => setRememberMe(!!checked)}
-                    />
-                    <Label htmlFor="remember">Remember Me</Label>
+                  <Checkbox
+                    id="remember"
+                    checked={rememberMe}
+                    onCheckedChange={(checked) => setRememberMe(!!checked)}
+                  />
+                  <Label htmlFor="remember">Remember Me</Label>
                   </div>
                   <a href="/forgot-password" className="text-blue-600 hover:underline">
-                    Forgot Password?
+                  Forgot Password?
                   </a>
                 </div>
 
@@ -187,38 +190,37 @@ export function SignIn({
 
                 <div className="flex flex-col items-center w-full gap-4">
                   <Button
-                    type="submit"
-                    className="w-full h-[50px] font-bold uppercase"
-                    disabled={loading} // Disable button while loading
-                    >
+                  type="submit"
+                  className="w-full h-[50px] font-bold uppercase"
+                  disabled={loading}
+                  >
                   {loading ? "Signing in..." : "Sign In"}
                   </Button>
 
                   <Button
-                    type="button"
-                    variant="outline"
-                    className="w-full h-[50px] font-bold uppercase flex items-center justify-center gap-3"
-                    onClick={() => window.location.href = "/sign-in"}
+                  type="button"
+                  variant="outline"
+                  className="w-full h-[50px] font-bold uppercase flex items-center justify-center gap-3"
+                  onClick={() => alert("Google sign-in is not implemented.")}
                   >
-                    {/* Google logo */}
-                    <img
-                      src="/images/google-logo.png" // Gantilah dengan path logo Google yang sesuai
-                      alt="Google Logo"
-                      className="w-5 h-5" // Ukuran logo, bisa disesuaikan
-                    />
-                    Sign in with Google
+                  <img
+                    src="/images/google-logo.png"
+                    alt="Google Logo"
+                    className="w-5 h-5"
+                  />
+                  Sign in with Google
                   </Button>
 
                   <Button
-                    type="button"
-                    variant="outline"
-                    className="w-full h-[50px] font-bold uppercase"
-                    onClick={() => window.location.href = "/sign-in/employee"}
+                  type="button"
+                  variant="outline"
+                  className="w-full h-[50px] font-bold uppercase"
+                  onClick={() => window.location.href = "/sign-in/employee"}
                   >
-                    Use a different sign-in method
+                  Use a different sign-in method
                   </Button>
                 </div>
-              </form>
+                </form>
             </div>
             <div className="flex flex-col items-center w-full gap-5 mt-0">
               <div className="flex items-center w-full">

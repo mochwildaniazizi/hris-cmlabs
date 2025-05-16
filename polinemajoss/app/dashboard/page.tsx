@@ -1,8 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useAuth } from "../../lib/authContext";
 import { AppSidebar } from "../../components/ui/app-sidebar";
 import { ChartAreaInteractive } from "../../components/ui/chart-area-interactive";
 import { DataTable } from "../../components/ui/data-table";
@@ -12,8 +9,8 @@ import { SidebarInset, SidebarProvider } from "../../components/ui/sidebar";
 import data from "./data.json";
 
 export default function Page() {
-  const { user, loading } = useAuth();
-  const router = useRouter();
+  // const { user, loading } = useAuth();
+  // const router = useRouter();
 
   // useEffect(() => {
   //   // if (!loading && !user) {

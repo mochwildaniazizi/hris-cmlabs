@@ -3,7 +3,7 @@ import axios from 'axios';
 const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
 const axiosInstance = axios.create({
-  baseURL: "http://127.0.0.1:8000/api/",
+  baseURL: "",
   headers: {
     Authorization: token ? `Bearer ${token}` : '',
     Accept: "application/json",
