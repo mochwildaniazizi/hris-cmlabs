@@ -1,25 +1,48 @@
-"use client"
+"use client";
 
-import { usePathname } from "next/navigation"
-import { useState } from "react"
-import { Bell, Search, UserCircle } from "lucide-react"
-import { useAuth } from "../../lib/authContext" // pastikan path ini sesuai struktur project-mu
+import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
+import {
+  Bell,
+  Search,
+  UserCircle,
+  LogOut,
+  CreditCard,
+  BellIcon,
+  UserCircleIcon
+} from "lucide-react";
+import { useAuth } from "../../lib/authContext";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuSeparator
+} from "../../components/ui/dropdown-menu"; // sesuaikan path komponen dropdown-menu
 
 const pageTitles: Record<string, string> = {
   "/dashboard": "Dashboard",
   "/employee": "Employee",
-  // tambahkan route dan judul lainnya di sini
-}
+  // tambahkan route lain di sini
+};
 
 export function SiteHeader() {
-  const pathname = usePathname()
-  const title = pageTitles[pathname] || "Page"
-  const [search, setSearch] = useState("")
-  const { user } = useAuth()
+  const pathname = usePathname();
+  const router = useRouter();
+  const title = pageTitles[pathname] || "Page";
+
+  const [search, setSearch] = useState("");
+  const { user, signOut } = useAuth();
+
+  const handleSignOut = async () => {
+    await signOut();
+    router.push("/sign-in");
+  };
 
   return (
     <header className="w-full h-12 border-b flex items-center px-4 gap-4 bg-white">
-      {/* Judul halaman */}
+      {/* Judul Halaman */}
       <h1 className="text-lg font-semibold flex-shrink-0">{title}</h1>
 
       {/* Search Box */}
@@ -45,18 +68,43 @@ export function SiteHeader() {
         </span>
       </button>
 
-      {/* User Info */}
+      {/* User Info & Dropdown */}
       {user ? (
-        <div className="flex items-center gap-2 cursor-pointer">
-          <img
-            src={user.avatar || "/avatars/default.jpg"}
-            alt={user.name}
-            className="w-8 h-8 rounded-full object-cover"
-          />
-          <span className="text-sm font-medium text-gray-700">
-            {user.name}
-          </span>
-        </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <div className="flex items-center gap-2 cursor-pointer">
+              <img
+                src={user.avatar || "/avatars/default.jpg"}
+                alt={user.name}
+                className="w-8 h-8 rounded-full object-cover"
+              />
+              <span className="text-sm font-medium text-gray-700">
+                {user.name}
+              </span>
+            </div>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuGroup>
+              <DropdownMenuItem>
+                <UserCircleIcon className="mr-2 h-4 w-4" />
+                Account
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <CreditCard className="mr-2 h-4 w-4" />
+                Billing
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <BellIcon className="mr-2 h-4 w-4" />
+                Notifications
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={handleSignOut}>
+              <LogOut className="mr-2 h-4 w-4" />
+              Sign Out
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       ) : (
         <div className="flex items-center gap-2 text-gray-400 text-sm">
           <UserCircle className="w-8 h-8" />
@@ -64,5 +112,5 @@ export function SiteHeader() {
         </div>
       )}
     </header>
-  )
+  );
 }
