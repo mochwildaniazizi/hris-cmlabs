@@ -9,6 +9,7 @@ import { Card, CardContent } from "../../components/ui/card"
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "../../components/ui/table"
 import { Filter, Download, Upload, Plus, Bell, UserCircle2 } from "lucide-react"
 import { Toggle } from "../../components/ui/toggle"
+import { SiteHeader } from "../../components/ui/site-header"
 
 export default function EmployeeDatabase() {
   const [employees, setEmployees] = useState([])
@@ -37,32 +38,7 @@ export default function EmployeeDatabase() {
       <AppSidebar variant="inset" />
       <SidebarInset>
         <div className="flex flex-col h-full bg-white">
-
-          {/* Header */}
-          <header className="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-gray-200 w-full">
-            <div className="flex items-center space-x-3">
-              <div className="font-bold text-lg select-none">Employee Database</div>
-              <div className="relative w-72">
-                <Input type="search" placeholder="Search" className="pr-10" />
-                <button className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
-                  🔍
-                </button>
-              </div>
-            </div>
-            <div className="flex items-center space-x-4">
-              <button className="p-2 rounded-md hover:bg-gray-100">
-                <Bell size={20} />
-              </button>
-              <div className="flex items-center space-x-2 cursor-pointer select-none">
-                <UserCircle2 size={28} className="text-gray-500" />
-                <div className="text-sm">
-                  <div className="font-semibold">username</div>
-                  <div className="text-xs text-gray-400">roles user</div>
-                </div>
-              </div>
-            </div>
-          </header>
-
+          <SiteHeader />
           {/* Summary Cards */}
           <section className="px-6 py-4 border-b border-gray-200">
             <div className="grid grid-cols-4 gap-6 mb-8">
