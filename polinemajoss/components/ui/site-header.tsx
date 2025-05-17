@@ -9,7 +9,8 @@ import {
   LogOut,
   CreditCard,
   BellIcon,
-  UserCircleIcon
+  UserCircleIcon,
+  UserCircle2
 } from "lucide-react";
 import { useAuth } from "../../lib/authContext";
 import {
@@ -25,6 +26,7 @@ import { SidebarTrigger } from "./sidebar";
 const pageTitles: Record<string, string> = {
   "/dashboard": "Dashboard",
   "/employee": "Employee",
+  "/employee/add": "Add Employee",
   // sesuaikan route dan judul
 }
 export function SiteHeader() {
@@ -53,21 +55,18 @@ export function SiteHeader() {
       </div>
 
       {/* Notification Icon */}
-      <button
-        aria-label="Notifications"
-        className="relative p-2 rounded hover:bg-gray-100"
-      >
-        <Bell className="w-6 h-6 text-gray-600" />
-        <span className="absolute top-0 right-0 inline-flex items-center justify-center px-1.5 py-0.5 text-xs font-bold leading-none text-white bg-red-600 rounded-full">
-          3
-        </span>
-      </button>
-
-      {/* User Section */}
-      <div className="flex items-center gap-2 cursor-pointer">
-        <UserCircle className="w-8 h-8 text-gray-600" />
-        <span className="text-sm font-medium text-gray-700">John Doe</span>
-      </div>
+      <div className="flex items-center space-x-4">
+              <button className="p-2 rounded-md hover:bg-gray-100">
+                <Bell size={20} />
+              </button>
+              <div className="flex items-center space-x-2 cursor-pointer select-none">
+                <UserCircle2 size={28} className="text-gray-500" />
+                <div className="text-sm">
+                  <div className="font-semibold">username</div>
+                  <div className="text-xs text-gray-400">roles user</div>
+                </div>
+              </div>
+            </div>
     </header>
   )
 }
