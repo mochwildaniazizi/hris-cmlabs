@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
       }
   
       try {
-        const response = await api.get("/api/user", {
+        const response = await api.get("/user", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -36,21 +36,17 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   
-  const logout = () => {
+  const signOut = () => {
     localStorage.removeItem("token");
     document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, setUser, loading, logout }}>
+    <AuthContext.Provider value={{ user, setUser, loading, signOut }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
 export const useAuth = () => useContext(AuthContext);
-// export const useAuthUser = () => {
-//   const { user, loading } = useAuth();
-//   return { user, loading };
-// };
