@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { Label } from "../ui/label";
+import { Input } from "./input";
+import { Button } from "./button";
+import { Label } from "./label";
 
-export function CheckEmail({
+export function ForgotPassword({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
@@ -67,48 +67,52 @@ export function CheckEmail({
         }}
       >
         {/* Form - Kiri */}
-        <div className="bg-white w-1/2 h-[95vh] rounded-[15px] shadow-md mx-[2%] p-8 flex flex-col justify-center">
-          <div className="flex flex-col items-center justify-between gap-7 w-full">
+        <div className="bg-white w-1/2 max-h-[95vh] overflow-y-auto rounded-[15px] shadow-md mx-[2%] p-8 pt-12">
+          <div className="flex flex-col justify-between items-center gap-7 h-full">
             <div className="flex flex-col justify-between gap-7">
-            <img
-                src="/images/hris-logo.png"
-                alt="Logo"
-                className="w-[15%] max-w-[40%] drop-shadow-[0_0_1px_5px_black] mx-auto"
-            />
+              <h1 className="text-2xl font-bold text-center">Forgot Password</h1>
 
-                <h1 className="text-2xl font-bold text-center">Check your email</h1>
+              <form
+                onSubmit={handleForgotPassword}
+                className="flex flex-col gap-6 w-full"
+              >
+                <p>
+                  No worries! Enter your email address below, and we'll send you
+                  a link to reset your password.
+                </p>
+                <div className="grid gap-3">
+                  <Label htmlFor="email">Email</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </div>
 
-                <form
-                    onSubmit={handleForgotPassword}
-                    className="flex flex-col gap-6 w-full"
-                >
-                    <p className="text-center">
-                        We sent a password reset link to your email (uremail@gmail.com) 
-                        which valid for 24 hours after receive the email. Please check your inbox!
-                    </p>
+                {error && <p className="text-red-500 text-sm">{error}</p>}
+                {success && <p className="text-green-500 text-sm">{success}</p>}
 
-                    <div className="flex flex-col items-center w-full gap-4">
-                        <Button
-                            type="submit"
-                            className="w-full h-[50px] font-bold uppercase"
-                        >
-                            Open Gmail
-                        </Button>
-                    </div>
+                <div className="flex flex-col items-center w-full gap-4">
+                  <Button
+                    type="submit"
+                    className="w-full h-[50px] font-bold uppercase"
+                  >
+                    Reset Password
+                  </Button>
 
-                    <div className="text-center text-sm">
-                        Don&apos;t receive the email?{" "}
-                        <a href="/forgot-password" className="underline underline-offset-4">
-                        Click here to resend!
-                        </a>
-                    </div>
-                    <div className="mt-4 text-sm flex items-center justify-center">
-                        <a href="/signin" className="flex items-center text-gray-700 hover:underline">
-                            <img src="/left-arrow.svg" alt="Back" className="w-4 h-4 mr-2" />
-                            Back to log in
-                        </a>
-                    </div>
-                </form>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="w-full h-[50px] font-bold uppercase"
+                    onClick={() => (window.location.href = "/signin")}
+                  >
+                    Back to sign in
+                  </Button>
+                </div>
+              </form>
             </div>
           </div>
         </div>

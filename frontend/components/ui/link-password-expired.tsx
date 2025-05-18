@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { Label } from "../ui/label";
+import { Input } from "./input";
+import { Button } from "./button";
+import { Label } from "./label";
 
-export function SuccessResetPassword({
+export function LinkExpired({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
@@ -76,15 +76,15 @@ export function SuccessResetPassword({
                 className="w-[15%] max-w-[40%] drop-shadow-[0_0_1px_5px_black] mx-auto"
             />
 
-                <h1 className="text-2xl font-bold text-center">Your Password has been successfully reset</h1>
+                <h1 className="text-2xl font-bold text-center">Link Expired</h1>
 
                 <form
                     onSubmit={handleForgotPassword}
                     className="flex flex-col gap-6 w-full"
                 >
                     <p className="text-center">
-                        You can log in with your new password. If you encounter any issues,
-                        please contact support!
+                        The password reset link has expired.
+                        Please request a new link to reset to your password.
                     </p>
 
                     <div className="flex flex-col items-center w-full gap-4">
@@ -93,7 +93,7 @@ export function SuccessResetPassword({
                             className="w-full h-[40px] font-bold uppercase"
                             onClick={() => window.location.href = "/signin"}
                         >
-                            Sign in Now
+                            Back to Sign in
                         </Button>
                     </div>
                 </form>
