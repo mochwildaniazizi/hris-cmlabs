@@ -14,20 +14,34 @@ class AuthController extends Controller
     public function signUp(Request $request)
     {
         $request->validate([
+            'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6|confirmed',
         ]);
 
         $user = User::create([
+            'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'is_admin' => false, // default, ubah sesuai kebutuhan
         ]);
+        // Hapus token lama jika ada
+        $user->tokens()->delete();
+
+        // Buat token baru
+        $token = $user->createToken('signup_token')->plainTextToken;
 
         return response()->json([
             'message' => 'User registered successfully',
-            'user' => $user
-        ], 201);
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+            ],
+            'token' => $token
+        ])->cookie(
+            'token', $token, 60 * 24 * 7, '/', 'localhost', false, true
+        );
     }
 
     public function signIn(Request $request)
@@ -88,12 +102,12 @@ class AuthController extends Controller
     }
 
     // Logout API
-    // public function logout(Request $request)
-    // {
-    //     $request->user()->currentAccessToken()->delete();
+    public function signOut(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
 
-    //     return response()->json([
-    //         'message' => 'Logged out'
-    //     ]);
-    // }
+        return response()->json([
+            'message' => 'Logged out'
+        ]);
+    }
 }

@@ -29,6 +29,10 @@ import {
   useSidebar,
 } from "../../components/ui/sidebar"
 
+import { useAuth } from "../../lib/authContext" // Import context auth
+import { useRouter } from "next/navigation" // Import router untuk redirect
+import { useEffect } from "react" // Import useEffect untuk side effect
+
 export function NavUser({
   user,
 }: {
@@ -39,7 +43,14 @@ export function NavUser({
   }
 }) {
   const { isMobile } = useSidebar()
+  const { signOut } = useAuth() // Panggil logout dari context
+  const router = useRouter()   // Inisialisasi router
 
+  const handleSignOut = async () => {
+    await signOut();              // Panggil fungsi logout dari authContext
+    router.push("/sign-in");     // Redirect ke halaman sign-in
+  };
+  
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -82,26 +93,7 @@ export function NavUser({
                 </div>
               </div>
             </DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <UserCircleIcon />
-                Account
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <CreditCardIcon />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <BellIcon />
-                Notifications
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <LogOutIcon />
-              Log out
-            </DropdownMenuItem>
+            <DropdownMenuSeparator /> 
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
