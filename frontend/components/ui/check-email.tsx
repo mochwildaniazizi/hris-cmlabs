@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { Label } from "../ui/label";
+import { Input } from "./input";
+import { Button } from "./button";
+import { Label } from "./label";
 
-export function LinkExpired({
+export function CheckEmail({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
@@ -76,25 +76,37 @@ export function LinkExpired({
                 className="w-[15%] max-w-[40%] drop-shadow-[0_0_1px_5px_black] mx-auto"
             />
 
-                <h1 className="text-2xl font-bold text-center">Link Expired</h1>
+                <h1 className="text-2xl font-bold text-center">Check your email</h1>
 
                 <form
                     onSubmit={handleForgotPassword}
                     className="flex flex-col gap-6 w-full"
                 >
                     <p className="text-center">
-                        The password reset link has expired.
-                        Please request a new link to reset to your password.
+                        We sent a password reset link to your email (uremail@gmail.com) 
+                        which valid for 24 hours after receive the email. Please check your inbox!
                     </p>
 
                     <div className="flex flex-col items-center w-full gap-4">
                         <Button
                             type="submit"
-                            className="w-full h-[40px] font-bold uppercase"
-                            onClick={() => window.location.href = "/signin"}
+                            className="w-full h-[50px] font-bold uppercase"
                         >
-                            Back to Sign in
+                            Open Gmail
                         </Button>
+                    </div>
+
+                    <div className="text-center text-sm">
+                        Don&apos;t receive the email?{" "}
+                        <a href="/forgot-password" className="underline underline-offset-4">
+                        Click here to resend!
+                        </a>
+                    </div>
+                    <div className="mt-4 text-sm flex items-center justify-center">
+                        <a href="/signin" className="flex items-center text-gray-700 hover:underline">
+                            <img src="/left-arrow.svg" alt="Back" className="w-4 h-4 mr-2" />
+                            Back to log in
+                        </a>
                     </div>
                 </form>
             </div>
